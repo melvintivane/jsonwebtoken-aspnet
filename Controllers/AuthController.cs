@@ -66,14 +66,16 @@ namespace jsonwebtoken_aspnet.Controllers
         {
             try
             {
-                List<Claim> claims = new()
-                {
-                    new(ClaimTypes.Name, user.Username)
-                };
+                List<Claim> claims = new() { new(ClaimTypes.Name, user.Username) };
 
-                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetSection("AppSettings:Token").Value!));
+                var key = new SymmetricSecurityKey(
+                    Encoding.UTF8.GetBytes(_configuration.GetSection("AppSettings:Token").Value!)
+                );
 
-                var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
+                var credentials = new SigningCredentials(
+                    key,
+                    SecurityAlgorithms.HmacSha256Signature
+                );
 
                 var token = new JwtSecurityToken(
                     claims: claims,
